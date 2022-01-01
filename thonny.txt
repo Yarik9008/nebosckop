@@ -1,0 +1,2 @@
+cd /home/proteus/apps/thonny/bin
+sudo ./thonny
