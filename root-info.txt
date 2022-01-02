@@ -1,0 +1,9 @@
+email: nebosckop@yandex.ru
+password email: nebosckop-1
+
+git: nebosckop@yandex.ru
+password git: nebosckop-1
+
+anydeck: 214 984 849
+password anydeck: raspberry
+
