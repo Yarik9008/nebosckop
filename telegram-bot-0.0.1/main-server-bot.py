@@ -1,3 +1,4 @@
+from time import sleep
 import  telebot
 import config
 import logging
@@ -78,6 +79,8 @@ class NeboscopeTelBot:
             print(str(mes))
             if mes.content_type == 'text' and mes.text in self.weather_name_mass:
                 self.request_weather(mes)
+            elif mes.content_type == 'text' and len(mes.text.lower().split()) == 2:
+                self.request_stek_weather(mes)
             else:
                 self.bot.send_message(mes.chat.id, 'No command: ' + mes.text)
 
@@ -86,9 +89,29 @@ class NeboscopeTelBot:
         name = message.from_user.username
         massdata = {**self.lyx_metr.reqiest(), **self.term_h_p.reqiest()}
         temp, pressure, humidity = massdata['temp'], massdata['pressure'],massdata['humidity']
-        
         self.bot.send_message(message.chat.id, f'Weather realtime:\nTerm = {temp}\nPressure = {pressure}\nHumidity = {humidity}\nGoodbye {name}!')
-        
+
+    
+    def request_stek_weather(self, message):
+        tip = message.text.lower().split()[0]
+        n = message.text.lower().split()[1]
+        name = message.from_user.username
+        massdata = self.term_h_p.reqiest()
+        temp, pressure, humidity = massdata['temp'], massdata['pressure'],massdata['humidity']
+        if tip == 'температура':
+            for i in range(n):
+                self.bot.send_message(message.chat.id, f'Temp: {temp} C')
+                sleep(1)
+        elif tip == 'влажность':
+            for i in range(n):
+                self.bot.send_message(message.chat.id, f'Humidity: {humidity} %')
+                sleep(1)
+        elif tip == 'давление':
+            for i in range(n):
+                self.bot.send_message(message.chat.id, f'Давление: {pressure}')
+                sleep(1)
+        else:
+            self.bot.send_message(message.chat.id, f'no command: {message.text}')
 
     def main(self):
         self.bot.polling(non_stop=True)
