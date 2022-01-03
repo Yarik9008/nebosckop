@@ -2,6 +2,8 @@ import smbus2
 import bme280
 import board
 import adafruit_bh1750
+import time
+import neopixel
 
 
 class NeboscopeBH1750:
@@ -35,3 +37,74 @@ class NeboscopeBME280:
             return {'temp': None,
                     'pressure': None,
                     'humidity': None}
+
+
+class NeboscopeNeopix:
+    def __init__(self) -> None:
+        self.pixel_pin = board.D18
+        self.ORDER = neopixel.GRB
+        self.pixels = neopixel.NeoPixel(
+            self.pixel_pin, 64, brightness=1, auto_write=False, pixel_order=self.ORDER)
+        self.check = True
+    
+    def starting_func(self, color, delay):
+        for i in range(16):
+            if not self.check and not color == (0,0,0):
+                break
+            self.pixels[i] = color
+            self.pixels[31 - i] = color
+            self.pixels[i + 31] = color
+            self.pixels[63 - i] = color
+            self.pixels.show()
+            time.sleep(delay)
+        
+    
+    def start_init_neo(self):
+        self.starting_func((255, 0, 0), 0.2)
+        self.starting_func((0, 255, 0), 0.2)
+        self.starting_func((0, 0, 255), 0.2)
+        self.starting_func((0, 0, 0), 0)
+
+    
+    
+    def start_swow(self, wait=0.0001):
+        def wheel(pos):
+            if pos < 0 or pos > 255:
+                r = g = b = 0
+            elif pos < 85:
+                r = int(pos * 3)
+                g = int(255 - pos * 3)
+                b = 0
+            elif pos < 170:
+                pos -= 85
+                r = int(255 - pos * 3)
+                g = 0
+                b = int(pos * 3)
+            else:
+                pos -= 170
+                r = 0
+                g = int(pos * 3)
+                b = int(255 - pos * 3)
+            return (r, g, b)
+
+
+
+        while self.check:
+            for j in range(255):
+                for i in range(16):
+                    if not self.check:
+                        break
+                    pixel_index = (i * 256 // 16) + j
+                    self.pixels[i] = wheel(pixel_index & 255)
+                    self.pixels[31 - i] = wheel(pixel_index & 255)
+                    self.pixels[i + 31] = wheel(pixel_index & 255)
+                    self.pixels[63 - i] = wheel(pixel_index & 255)
+                    self.pixels.show()
+                time.sleep(wait)
+                if not self.check:
+                    break
+
+    def stop_swow(self):
+        self.check = False
+        self.starting_func((0, 0, 0), 0)
+

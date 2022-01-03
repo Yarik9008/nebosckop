@@ -59,6 +59,7 @@ class Neboscope_Logging:
 class NeboscopeTelBot:
     def __init__(self, token):
         self.weather_name_mass = ['weather', 'погода']
+        self.stek_text_mass = ['погода', 'температура', 'влажность', 'давление']
         self.logger = Neboscope_Logging()
         try:
             self.bot = telebot.TeleBot(token)
@@ -85,17 +86,35 @@ class NeboscopeTelBot:
         except:
             self.logger.warning('no init cam')
 
+        try:
+            self.neo = NeboscopeNeopix()
+            self.logger.info('init neopix')
+            self.neo.start_init_neo()
+        except:
+            self.logger.warning('no init neopix')
+
     def input_massage(self, message):
         for mes in message:
-            print(str(mes))
+            #print(str(mes))
             if mes.content_type == 'text' and mes.text.lower() in self.weather_name_mass:
                 self.request_weather(mes)
-            elif mes.content_type == 'text' and len(mes.text.lower().split()) == 2:
+            elif mes.content_type == 'text' and len(mes.text.lower().split()) == 2 and mes.text.lower().split()[0] in self.stek_text_mass:
                 self.request_stek_weather(mes)
             elif mes.content_type == 'text' and len(mes.text.lower().split()) == 4 and mes.text.lower().split()[0] == 'запись':
                 self.write_weather_file(mes)
             elif mes.content_type == 'text' and mes.text.lower() == 'фото':
                 self.request_photo(mes)
+            elif mes.content_type == 'text' and mes.text.lower() == 'нео старт':
+                self.bot.send_message(mes.chat.id, 'Neboscope neo start')
+                self.neo.check = True
+                self.neo.start_init_neo()
+            elif mes.content_type == 'text' and mes.text.lower() == 'нео шоу':
+                self.bot.send_message(mes.chat.id, 'Neboscope neo swow')
+                self.neo.check = True
+                self.neo.start_swow()
+            elif mes.content_type == 'text' and mes.text.lower() == 'нео стоп':
+                self.bot.send_message(mes.chat.id, 'Neboscope neo stop')
+                self.neo.stop_swow()
             else:
                 self.bot.send_message(mes.chat.id, 'No command: ' + mes.text)
 
