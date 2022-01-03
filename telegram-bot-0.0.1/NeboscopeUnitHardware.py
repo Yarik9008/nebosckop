@@ -10,7 +10,10 @@ class NeboscopeBH1750:
         self.sensor = adafruit_bh1750.BH1750(i2c)
 
     def reqiest(self):
-        return {'lux': self.sensor.lux}
+        try:
+            return {'lux': self.sensor.lux}
+        except:
+            return{'lux': None}
 
 
 class NeboscopeBME280:
@@ -22,8 +25,13 @@ class NeboscopeBME280:
             self.bus, self.address)
 
     def reqiest(self):
-        self.data = bme280.sample(
-            self.bus, self.address, self.calibration_params)
-        return {'temp': self.data.temperature,
-               'pressure': self.data.pressure,
-               'humidity': self.data.humidity}
+        try:
+            self.data = bme280.sample(
+                self.bus, self.address, self.calibration_params)
+            return {'temp': self.data.temperature,
+                    'pressure': self.data.pressure,
+                    'humidity': self.data.humidity}
+        except:
+            return {'temp': None,
+                    'pressure': None,
+                    'humidity': None}
