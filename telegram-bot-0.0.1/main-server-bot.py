@@ -2,6 +2,7 @@ from time import sleep
 import telebot
 import config
 import logging
+import cv2
 #import coloredlogs
 from datetime import datetime
 from pprint import pprint
@@ -78,15 +79,23 @@ class NeboscopeTelBot:
         except:
             self.logger.warning('no init bme280')
 
+        try:
+            self.cam = cv2.VideoCapture(0)
+            self.logger.info('init cam')
+        except:
+            self.logger.warning('no init cam')
+
     def input_massage(self, message):
         for mes in message:
             print(str(mes))
-            if mes.content_type == 'text' and mes.text in self.weather_name_mass:
+            if mes.content_type == 'text' and mes.text.lower() in self.weather_name_mass:
                 self.request_weather(mes)
             elif mes.content_type == 'text' and len(mes.text.lower().split()) == 2:
                 self.request_stek_weather(mes)
             elif mes.content_type == 'text' and len(mes.text.lower().split()) == 4 and mes.text.lower().split()[0] == 'запись':
                 self.write_weather_file(mes)
+            elif mes.content_type == 'text' and mes.text.lower() == 'фото':
+                self.request_photo(mes)
             else:
                 self.bot.send_message(mes.chat.id, 'No command: ' + mes.text)
 
@@ -137,21 +146,33 @@ class NeboscopeTelBot:
             n = message.text.lower().split()[2]
             timestepp = float(message.text.lower().split()[3])
         else:
-            self.bot.send_message(message.chat.id, f'no command: {message.text}')
+            self.bot.send_message(
+                message.chat.id, f'no command: {message.text}')
             return None
-            
+
         name = message.from_user.username
         time = str(datetime.now())
-        self.bot.send_message(message.chat.id, f'Writing file {tip} to: {name}_{tip}_{n}_{time}.txt')
+        self.bot.send_message(
+            message.chat.id, f'Writing file {tip} to: {name}_{tip}_{n}_{time}.txt')
         with open(f"file/{name}_{tip}_{n}_{time}.txt", "w") as file1:
-            file1.write(f'Settings: Type: {tip} Len: {n} Timesleep: {timestepp} Start-time: {time}\n')
+            file1.write(
+                f'Settings: Type: {tip} Len: {n} Timesleep: {timestepp} Start-time: {time}\n')
             file1.write(f'Num Temp Pres Hum\n')
             for i in range(int(n)):
                 massdata = self.term_h_p.reqiest()
                 temp, pressure, humidity = massdata['temp'], massdata['pressure'], massdata['humidity']
                 file1.write(f'{i} {temp} {pressure} {humidity}')
                 sleep(timestepp)
-            self.bot.send_document(file1)
+            self.bot.send_document(message.chat.id, file1)
+
+    def request_photo(self, message):
+        name = message.from_user.username
+        time = str(datetime.now())
+        ret, frame = self.cam.read()
+        namefile = f"file/{name}_{time}.png"
+        cv2.imwrite(namefile, frame)
+        photo = open(namefile,  'rb')
+        self.bot.send_photo(message.chat.id, photo)
 
     def main(self):
         self.bot.polling(non_stop=True)
