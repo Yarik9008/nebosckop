@@ -11,7 +11,7 @@ class NeboscopeBH1750:
 
     def reqiest(self):
         try:
-            return {'lux': self.sensor.lux}
+            return {'lux': round(self.sensor.lux, 2)}
         except:
             return{'lux': None}
 
@@ -28,9 +28,9 @@ class NeboscopeBME280:
         try:
             self.data = bme280.sample(
                 self.bus, self.address, self.calibration_params)
-            return {'temp': self.data.temperature,
-                    'pressure': self.data.pressure,
-                    'humidity': self.data.humidity}
+            return {'temp': round(self.data.temperature, 2),
+                    'pressure': round(self.data.pressure, 2),
+                    'humidity': round(self.data.humidity, 2)}
         except:
             return {'temp': None,
                     'pressure': None,
