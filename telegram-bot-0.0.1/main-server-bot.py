@@ -171,18 +171,17 @@ class NeboscopeTelBot:
 
         name = message.from_user.username
         time = str(datetime.now())
-        self.bot.send_message(
-            message.chat.id, f'Writing file {tip} to: {name}_{tip}_{n}_{time}.txt')
+        self.bot.send_message(message.chat.id, f'Writing file {tip} to: {name}_{tip}_{n}_{time}.txt')
         with open(f"file/{name}_{tip}_{n}_{time}.txt", "w") as file1:
-            file1.write(
-                f'Settings: Type: {tip} Len: {n} Timesleep: {timestepp} Start-time: {time}\n')
+            file1.write(f'Settings: Type: {tip} Len: {n} Timesleep: {timestepp} Start-time: {time}\n')
             file1.write(f'Num Temp Pres Hum\n')
             for i in range(int(n)):
                 massdata = self.term_h_p.reqiest()
                 temp, pressure, humidity = massdata['temp'], massdata['pressure'], massdata['humidity']
-                file1.write(f'{i} {temp} {pressure} {humidity}')
+                file1.write(f'{i} {temp} {pressure} {humidity}\n')
                 sleep(timestepp)
-            self.bot.send_document(message.chat.id, file1)
+        doc  =  open (f"file/{name}_{tip}_{n}_{time}.txt", 'rb')
+        self.bot.send_document(message.chat.id, doc)
 
     def request_photo(self, message):
         name = message.from_user.username
@@ -192,6 +191,7 @@ class NeboscopeTelBot:
         cv2.imwrite(namefile, frame)
         photo = open(namefile,  'rb')
         self.bot.send_photo(message.chat.id, photo)
+        photo.close()
 
     def main(self):
         self.bot.polling(non_stop=True)

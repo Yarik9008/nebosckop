@@ -7,3 +7,10 @@ password git: nebosckop-1
 anydeck: 214 984 849
 password anydeck: raspberry
 
+Ngrok account:
+login: nebosckop@yandex.ru
+password: nebosckop-1
+token: 23BZwt7S1xxKeXXE1tC69EORBSa_6CCurBJNPQ5iN7Man4V1W
+
+telegram account:
+token: 5058985853:AAHbLTN9sai_eocdTjzSnnbhne7XaBWdRVQ
