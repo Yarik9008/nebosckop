@@ -14,10 +14,10 @@ class Neboscope_Logging:
         self.mylogs = logging.getLogger(__name__)
         self.mylogs.setLevel(logging.DEBUG)
         # обработчик записи в лог-файл
-        name = 'log/' + \
+        self.name = 'log/' + \
             '-'.join('-'.join('-'.join(str(datetime.now()).split()
                                        ).split('.')).split(':')) + 'log'
-        self.file = logging.FileHandler(name)
+        self.file = logging.FileHandler(self.name)
         self.fileformat = logging.Formatter(
             "%(asctime)s:%(levelname)s:%(message)s")
         self.file.setLevel(logging.DEBUG)
@@ -93,6 +93,9 @@ class NeboscopeTelBot:
 
     def input_massage(self, message):
         for mes in message:
+            name = mes.from_user.username
+            data = mes.text
+            self.logger.debug(f'User: {name} Data: {data}')
             #print(str(mes))
             if mes.content_type == 'text' and mes.text.lower() in self.weather_name_mass:
                 self.request_weather(mes)
@@ -114,7 +117,11 @@ class NeboscopeTelBot:
                 self.bot.send_message(mes.chat.id, 'Neboscope neo stop')
                 self.neo.stop_swow()
             else:
+                name = mes.from_user.username
+                data = mes.text
                 self.bot.send_message(mes.chat.id, 'No command: ' + mes.text)
+                self.logger.debug(f'User: {name} Data: {data}')
+
 
     def request_weather(self, message):
         name = message.from_user.username
@@ -191,8 +198,19 @@ class NeboscopeTelBot:
         self.bot.send_photo(message.chat.id, photo)
         photo.close()
 
+    def send_log(self, message):
+        name = message.from_user.username
+        data = message.text
+        try:
+            with open (self.logger.name, 'rb') as doc:
+                self.bot.send_document(message.chat.id, doc)
+                self.logger.debug(f'User: {name} Send log file: {self.logger.name}')
+        except:
+            self.logger.debug(f'User: {name} Error send log file: {self.logger.name}')
+
     def main(self):
         self.bot.polling(non_stop=True)
+
 
 
 a = NeboscopeTelBot(config.token)
