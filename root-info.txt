@@ -12,5 +12,13 @@ login: nebosckop@yandex.ru
 password: nebosckop-1
 token: 23BZwt7S1xxKeXXE1tC69EORBSa_6CCurBJNPQ5iN7Man4V1W
 
+
+password: neboscope_test
+token: 23WEcMqD1dBPMUPVUSK719y6hzd_cCaxi7R7tNB6zje8foTV
+
+
 telegram account:
 token: 5058985853:AAHbLTN9sai_eocdTjzSnnbhne7XaBWdRVQ
+
+
+5.tcp.eu.ngrok.io

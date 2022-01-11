@@ -3,9 +3,7 @@ import telebot
 import config
 import logging
 import cv2
-#import coloredlogs
 from datetime import datetime
-from pprint import pprint
 from NeboscopeUnitHardware import *
 
 
@@ -108,10 +106,10 @@ class NeboscopeTelBot:
                 self.bot.send_message(mes.chat.id, 'Neboscope neo start')
                 self.neo.check = True
                 self.neo.start_init_neo()
-            elif mes.content_type == 'text' and mes.text.lower() == 'нео шоу':
-                self.bot.send_message(mes.chat.id, 'Neboscope neo swow')
-                self.neo.check = True
-                self.neo.start_swow()
+            # elif mes.content_type == 'text' and mes.text.lower() == 'нео шоу':
+            #     self.bot.send_message(mes.chat.id, 'Neboscope neo swow')
+            #     self.neo.check = True
+            #     self.neo.start_swow()
             elif mes.content_type == 'text' and mes.text.lower() == 'нео стоп':
                 self.bot.send_message(mes.chat.id, 'Neboscope neo stop')
                 self.neo.stop_swow()
@@ -121,9 +119,9 @@ class NeboscopeTelBot:
     def request_weather(self, message):
         name = message.from_user.username
         massdata = {**self.lyx_metr.reqiest(), **self.term_h_p.reqiest()}
-        temp, pressure, humidity = massdata['temp'], massdata['pressure'], massdata['humidity']
+        temp, pressure, humidity, lyx = massdata['temp'], massdata['pressure'], massdata['humidity'], massdata['lyx']
         self.bot.send_message(
-            message.chat.id, f'Weather realtime:\nTerm = {temp}\nPressure = {pressure}\nHumidity = {humidity}\nGoodbye {name}!')
+            message.chat.id, f'Weather realtime:\nTerm = {temp}\nPressure = {pressure}\nHumidity = {humidity}\nLyx = {lyx}')
 
     def request_stek_weather(self, message):
         tip = message.text.lower().split()[0]
