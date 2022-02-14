@@ -2,9 +2,7 @@ from orbital import Station
 from pprint import pprint
 from datetime import datetime, timedelta
 
-'''
-55,3970° с.ш., ° в.д.
-'''
+
 
 # coordinates of the patriot Park
 lat, lon, alt = 55.3970, 43.8302, 130 # Azimuth spb
@@ -24,4 +22,4 @@ pprint(station.getStation(), indent=4)
 
 
 print("\n")
-station.getSchedule(start, 24, printTable=True)
+pprint(station.getSchedule(start, 24, printTable=False)[0][0]))

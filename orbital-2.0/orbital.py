@@ -80,7 +80,7 @@ Path( tracksSchemesPath ).mkdir(parents=True, exist_ok=True)
 # mirror specifications
 defaultFocus = 0.77
 defaultRadius = 0.55
-defaultHorizon = 20
+defaultHorizon = 15
 minApogee = 20
 azimuthCorrection = 0
 
