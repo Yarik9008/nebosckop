@@ -15,7 +15,7 @@ class ubot:
         self.commands = {}
         self.default_handler = None
         self.message_offset = offset-1
-        self.sleep_btw_updates = 3
+        self.sleep_btw_updates = 1
 
     def myprint(self, level, txt):
         if level <= self.DEBUG_LEVEL:
@@ -38,7 +38,7 @@ class ubot:
         query_updates = {
             'offset': self.message_offset + 1,
             'limit': 1,
-            'timeout': 5,
+            'timeout': 1,
             'allowed_updates': ['message']}
         header = {'Content-Type': 'application/json'}
         try:
