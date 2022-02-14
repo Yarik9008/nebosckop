@@ -71,7 +71,7 @@ def send_weather(message):
 def send_photo(message):
     name = message.from_user.username
     time = str(datetime.now())
-    for i in range(100):
+    for i in range(20):
         ret, frame = cam.read()
     namefile = f"file/{name}_{time}.png"
     cv2.imwrite(namefile, frame)
@@ -93,3 +93,5 @@ def neo_start(message):
     bot.send_message(message.chat.id, 'Neboscope neo finish')
     neo.stop_swow()
 
+
+bot.infinity_polling()
