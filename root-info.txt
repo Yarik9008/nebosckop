@@ -21,4 +21,21 @@ telegram account:
 token: 5058985853:AAHbLTN9sai_eocdTjzSnnbhne7XaBWdRVQ
 
 
-5.tcp.eu.ngrok.io
+Базовая настройка после установки образа:
+    # обновление системы
+    - sudo apt update
+    - sudo apt list --upgradable
+    - sudo apt upgrade
+    # уствновка ngrok
+
+    # установка библиотек для небоскопа
+    - sudo apt install python3-pip
+    - sudo pip3 install smbus2
+    - sudo pip3 install bme280
+    - sudo pip3 install adafruit-circuitpython-bh1750
+    - sudo pip3 install rpi_ws281x adafruit-circuitpython-neopixel
+    - sudo python3 -m pip install --force-reinstall adafruit-blinka
+    - sudo apt install libopencv-dev python3-opencv
+    - sudo pip3 install pyTelegramBotAPI
+    - git clone https://github.com/Yarik9008/nebosckop
+    
