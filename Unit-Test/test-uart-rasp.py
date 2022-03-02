@@ -35,7 +35,7 @@ class PULT_Logging:
 class Rotator_SerialPort:
     def __init__(self,
                  logger: PULT_Logging = PULT_Logging,
-                 port: str = '/dev/USB0',
+                 port: str = '/dev/ttyACM0',
                  bitrate: int = 9600
                  ):
         global DEBUG
