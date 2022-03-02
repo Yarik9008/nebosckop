@@ -62,9 +62,11 @@ def send_welcome(message):
 # Комманда '/weather'
 @bot.message_handler(commands=['weather'])
 def send_weather(message):
+    
     massdata = {**lyx_metr.reqiest(), **term_h_p.reqiest()}
     temp, pressure, humidity, lyx = massdata['temp'], massdata['pressure'], massdata['humidity'], massdata['lux']
     bot.send_message(message.chat.id, f'Weather realtime:\nTerm = {temp}\nPressure = {pressure}\nHumidity = {humidity}\nLyx = {lyx}')
+    logger.debug(f'User: {message.from_user.username} Data: {message.text}')
 
 # Комманда '/photo'
 @bot.message_handler(commands=['photo'])
@@ -78,10 +80,12 @@ def send_photo(message):
     photo = open(namefile,  'rb')
     bot.send_photo(message.chat.id, photo)
     photo.close()
+    logger.debug(f'User: {message.from_user.username} Data: {message.text}')
 
 # Комманда '/neostart'
 @bot.message_handler(commands=['neostart'])
 def neo_start(message):
+    logger.debug(f'User: {message.from_user.username} Data: {message.text}')
     bot.send_message(message.chat.id, 'Neboscope neo start')
     neo.check = True
     neo.start_init_neo()
@@ -90,6 +94,7 @@ def neo_start(message):
 # Комманда '/neostop'
 @bot.message_handler(commands=['neostop'])
 def neo_start(message):
+    logger.debug(f'User: {message.from_user.username} Data: {message.text}')
     bot.send_message(message.chat.id, 'Neboscope neo finish')
     neo.stop_swow()
 
