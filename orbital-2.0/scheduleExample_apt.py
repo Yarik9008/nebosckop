@@ -22,4 +22,4 @@ pprint(station.getStation(), indent=4)
 
 
 print("\n")
-pprint(station.getSchedule(start, 24, printTable=False)[0][0]))
+pprint(station.getSchedule(start, 24, printTable=True))

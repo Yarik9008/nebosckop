@@ -98,5 +98,11 @@ def neo_start(message):
     bot.send_message(message.chat.id, 'Neboscope neo finish')
     neo.stop_swow()
 
+# Комманда '/neostop'
+@bot.message_handler(commands=['neostart-rotat'])
+def neo_start(message):
+    logger.debug(f'User: {message.from_user.username} Data: {message.text}')
+    bot.send_message(message.chat.id, 'Neboscope neo finish')
+    neo.stop_swow()
 
 bot.infinity_polling()
