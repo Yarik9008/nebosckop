@@ -164,7 +164,7 @@ def neo_start(message):
     neo.check = True
     neo.effect(5)
     bot.send_message(message.chat.id, 'Neboscope neo finish')
-    
+
 
 # Комманда '/neostop'
 @bot.message_handler(commands=['neostop'])
@@ -175,13 +175,13 @@ def neo_start(message):
     neo.stop_swow()
 
 
-# Комманда '/neostop'
-@bot.message_handler(commands=['neostart-rotat'])
-def neo_start(message):
+# # Комманда '/neostop'
+# @bot.message_handler(commands=['neostart-rotat'])
+# def neo_start(message):
 
-    logger.debug(f'User: {message.from_user.username} Data: {message.text}')
-    bot.send_message(message.chat.id, 'Neboscope neo finish')
-    neo.stop_swow()
+#     logger.debug(f'User: {message.from_user.username} Data: {message.text}')
+#     bot.send_message(message.chat.id, 'Neboscope neo finish')
+#     neo.stop_swow()
 
 
 # Комманда '/scheduleApt'
@@ -207,8 +207,6 @@ def neo_start(message):
     logger.debug(f'User: {message.from_user.username} Data: {message.text}')
     check = orbital_l.update_tle()
     bot.send_message(message.chat.id, f'Tle update data: {check}' )
-
-
 
 
 bot.infinity_polling()
