@@ -9,6 +9,7 @@
 # Author: yegres
 # GNU Radio version: 3.8.1.0
 
+from pty import slave_open
 from gnuradio import analog
 from gnuradio import blocks
 from gnuradio import filter
@@ -23,9 +24,16 @@ import datetime
 import osmosdr
 import time
 
+
+# первый аргумент - центральная частота 
+# второй аргумент - ширина полосы записи (нормальная без деления на два)
+# третий аргумент - длительность записи (в секундах)
+
+
 class test1(gr.top_block):
 
     def __init__(self):
+        global sleep_to_write
         gr.top_block.__init__(self, "Not titled yet")
 
         ##################################################
@@ -33,8 +41,9 @@ class test1(gr.top_block):
         ##################################################
         self.width = width = 100000
         self.samp_rate = samp_rate = 3000000
-        temp_freq = float(input('freq:'))
-        temp_cutoff = float(input('cutoff:'))
+        temp_freq = float(sys.argv[1]) # Частота 
+        temp_cutoff = float(sys.argv[2] // 2) # ширина полосы 
+        sleep_to_write = int(sys.argv[3])
         self.freq_0 = freq_0 = temp_freq
         self.freq = freq = temp_freq
         self.file_name = file_name = f"/data/REC_{str(freq)[:6]}_{datetime.datetime.now().replace(microsecond=0).isoformat().replace('T', '_').replace(':', '-')}.wav"
@@ -148,7 +157,7 @@ def main(top_block_cls=test1, options=None):
 
     tb.start()
     try:
-        input('Press Enter to quit: ')
+        time.sleep(sleep_to_write)
     except EOFError:
         pass
     tb.stop()
