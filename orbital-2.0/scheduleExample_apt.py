@@ -1,11 +1,11 @@
+from sqlalchemy import false
 from orbital import Station
 from pprint import pprint
 from datetime import datetime, timedelta
 
 
-
 # coordinates of the patriot Park
-lat, lon, alt = 55.3970, 43.8302, 130 # Azimuth spb
+lat, lon, alt = 55.3970, 43.8302, 130  # Azimuth spb
 
 # if you want to use your current coordinates (determined by the ip address)
 #lon, lat, alt = getCoords()
@@ -22,4 +22,7 @@ pprint(station.getStation(), indent=4)
 
 
 print("\n")
-pprint(station.getSchedule(start, 24, printTable=True))
+name = 'NOAA 19'
+Path = 'C:/Users/lynx9/Desktop/'
+
+station.getCoordsWithL2STrack

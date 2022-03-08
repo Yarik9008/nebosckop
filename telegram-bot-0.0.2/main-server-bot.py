@@ -1,6 +1,7 @@
 import telebot
 from config import *
 from NeboscopeUnitHardware import *
+from orbital import Lorett_Orbital
 import cv2
 
 '''
@@ -13,7 +14,8 @@ weather - get real time weather
 photo - get real time photo
 neostart - turn on the address tape 
 neostop - turn off the address tape
-
+schedule_apt - request schedule apt 
+schedule_l - request schedule l
 '''
 
 ### init ###
@@ -50,6 +52,15 @@ try:
 except:
     logger.warning('no init neopix')
 
+try:
+    path = 'C:/Users/Yarik9008/YandexDisk/nebosckop/telegram-bot-0.0.2'
+    lat, lon, height = 55.3970, 55.3970, 130
+    orbital_apt = Lorett_Orbital('lex', lon, lat, height, path, timeZone=3)
+    orbital_l = Lorett_Orbital('l2s', lon, lat, height, path, timeZone=3)
+    logger.info('init orbital')
+except:
+    logger.warning('no init orbital')
+
 
 # Комманда '/start' 
 @bot.message_handler(commands=['start'])
@@ -71,6 +82,7 @@ def send_weather(message):
 # Комманда '/photo'
 @bot.message_handler(commands=['photo'])
 def send_photo(message):
+
     name = message.from_user.username
     time = str(datetime.now())
     for i in range(20):
@@ -85,6 +97,7 @@ def send_photo(message):
 # Комманда '/neostart'
 @bot.message_handler(commands=['neostart'])
 def neo_start(message):
+
     logger.debug(f'User: {message.from_user.username} Data: {message.text}')
     bot.send_message(message.chat.id, 'Neboscope neo start')
     neo.check = True
@@ -94,6 +107,7 @@ def neo_start(message):
 # Комманда '/neostop'
 @bot.message_handler(commands=['neostop'])
 def neo_start(message):
+
     logger.debug(f'User: {message.from_user.username} Data: {message.text}')
     bot.send_message(message.chat.id, 'Neboscope neo finish')
     neo.stop_swow()
@@ -101,8 +115,27 @@ def neo_start(message):
 # Комманда '/neostop'
 @bot.message_handler(commands=['neostart-rotat'])
 def neo_start(message):
+
     logger.debug(f'User: {message.from_user.username} Data: {message.text}')
     bot.send_message(message.chat.id, 'Neboscope neo finish')
     neo.stop_swow()
+
+# Комманда '/schedule_apt'
+@bot.message_handler(commands=['schedule_apt'])
+def neo_start(message):
+    
+    logger.debug(f'User: {message.from_user.username} Data: {message.text}')
+    bot.send_message(message.chat.id, orbital_apt.getSchedule(48, returnTable=True) )
+
+
+# Комманда '/schedule_l'
+@bot.message_handler(commands=['schedule_l'])
+def neo_start(message):
+    
+    logger.debug(f'User: {message.from_user.username} Data: {message.text}')
+    bot.send_message(message.chat.id, orbital_l.getSchedule(48, returnTable=True))
+
+
+
 
 bot.infinity_polling()

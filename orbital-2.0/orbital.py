@@ -357,7 +357,6 @@ class Station:
             print(str(e), "\n")
 
 
-
     def getCoordinatesByIp(self) -> tuple:
         """
         Function that gets the station coordinates by his ip.
@@ -861,6 +860,7 @@ class Station:
 
         fileName = f"{satellite.replace(' ', '-')}_L2S_{satPass[0].strftime('%Y-%m-%dT%H-%M')}.txt"
 
+
         with open( join(currentPath, "tracks", fileName), "w") as file:
 
             print( "Pass duration:")
@@ -914,7 +914,6 @@ class Station:
             self.printAndSavePlotTrack(coordsX, coordsY, satellite=satellite, start=startTime, currentPath=currentPath, show=printTrack, save=saveTrack)
 
         return times, sphCoordsAZ, sphCoordsEL
-
 
     # Maybe there will be another more convenient format
     def generateNeboscopeTrack(satellite, satPass, printTrack=True, saveTrack=True):

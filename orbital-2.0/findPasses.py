@@ -1,5 +1,5 @@
 from sympy import im
-from lorettorbital.orbital import Station
+from orbital import Station
 from datetime import datetime
 from pprint import pprint
 
