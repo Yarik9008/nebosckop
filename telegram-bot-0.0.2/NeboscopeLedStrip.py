@@ -28,6 +28,7 @@ class LedStrip:
         )
         self.thread = object
         self.end_flag = False
+        self.check = True
 
     def effect(self, effect_name, seconds=-1, cycles=-1, clear=False, daemon=True):
         try:

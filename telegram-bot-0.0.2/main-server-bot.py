@@ -1,8 +1,10 @@
 import telebot
-from config import *
-from NeboscopeUnitHardware import *
-from orbital import Lorett_Orbital
 import cv2
+from config import *
+from orbital import *
+from NeboscopeUnitHardware import *
+from NeboscopeLedStrip import *
+
 
 '''
 погода-получение погоды в реальном времени
@@ -12,10 +14,23 @@ import cv2
 
 weather - get real time weather
 photo - get real time photo
-neostart - turn on the address tape 
+scheduleApt - request schedule apt 
+scheduleL - request schedule l
+updateTle - update tle data
+neostart1 - neo_1
+neostart2 - neo_2
+neostart3 - neo_3
+neostart4 - neo_4
+neostart5 - neo_5
+neostart6 - neo_6
+neostart7 - neo_7
+neostart8 - neo_8
+neostart9 - neo_9
+neostart10 - neo_10
+neostart11 - neo_11
+neostart12 - neo_12
+neostart13 - neo_13
 neostop - turn off the address tape
-schedule_apt - request schedule apt 
-schedule_l - request schedule l
 '''
 
 ### init ###
@@ -44,14 +59,17 @@ try:
     logger.info('init cam')
 except:
     logger.warning('no init cam')
-# 
+
+# работа с адресной светодиодной лентой 
 try:
-    neo = NeboscopeNeopix()
+    #neo = NeboscopeNeopix()
+    neo = LedStrip()
     logger.info('init neopix')
-    neo.start_init_neo()
+    neo.effect(1)
 except:
     logger.warning('no init neopix')
 
+# работа с библиотекой для рассчета пролетов 
 try:
     path = 'C:/Users/Yarik9008/YandexDisk/nebosckop/telegram-bot-0.0.2'
     lat, lon, height = 55.3970, 55.3970, 130
@@ -70,6 +88,7 @@ def send_welcome(message):
 Чтобы получить список того что я умею испльзуйте комманду /listproject.
 """)
 
+
 # Комманда '/weather'
 @bot.message_handler(commands=['weather'])
 def send_weather(message):
@@ -78,6 +97,7 @@ def send_weather(message):
     temp, pressure, humidity, lyx = massdata['temp'], massdata['pressure'], massdata['humidity'], massdata['lux']
     bot.send_message(message.chat.id, f'Weather realtime:\nTerm = {temp}\nPressure = {pressure}\nHumidity = {humidity}\nLyx = {lyx}')
     logger.debug(f'User: {message.from_user.username} Data: {message.text}')
+
 
 # Комманда '/photo'
 @bot.message_handler(commands=['photo'])
@@ -94,15 +114,57 @@ def send_photo(message):
     photo.close()
     logger.debug(f'User: {message.from_user.username} Data: {message.text}')
 
-# Комманда '/neostart'
-@bot.message_handler(commands=['neostart'])
+
+# Комманда '/neostart1'
+@bot.message_handler(commands=['neostart1'])
 def neo_start(message):
 
     logger.debug(f'User: {message.from_user.username} Data: {message.text}')
-    bot.send_message(message.chat.id, 'Neboscope neo start')
+    bot.send_message(message.chat.id, 'Neboscope neo start 1')
     neo.check = True
-    neo.start_init_neo()
+    neo.effect(1)
     bot.send_message(message.chat.id, 'Neboscope neo finish')
+
+# Комманда '/neostart2'
+@bot.message_handler(commands=['neostart2'])
+def neo_start(message):
+
+    logger.debug(f'User: {message.from_user.username} Data: {message.text}')
+    bot.send_message(message.chat.id, 'Neboscope neo start 2')
+    neo.check = True
+    neo.effect(2)
+    bot.send_message(message.chat.id, 'Neboscope neo finish')
+
+# Комманда '/neostart3'
+@bot.message_handler(commands=['neostart3'])
+def neo_start(message):
+
+    logger.debug(f'User: {message.from_user.username} Data: {message.text}')
+    bot.send_message(message.chat.id, 'Neboscope neo start 3')
+    neo.check = True
+    neo.effect(3)
+    bot.send_message(message.chat.id, 'Neboscope neo finish')
+
+# Комманда '/neostart4'
+@bot.message_handler(commands=['neostart4'])
+def neo_start(message):
+
+    logger.debug(f'User: {message.from_user.username} Data: {message.text}')
+    bot.send_message(message.chat.id, 'Neboscope neo start 4')
+    neo.check = True
+    neo.effect(4)
+    bot.send_message(message.chat.id, 'Neboscope neo finish')
+
+# Комманда '/neostart5'
+@bot.message_handler(commands=['neostart5'])
+def neo_start(message):
+
+    logger.debug(f'User: {message.from_user.username} Data: {message.text}')
+    bot.send_message(message.chat.id, 'Neboscope neo start 5')
+    neo.check = True
+    neo.effect(5)
+    bot.send_message(message.chat.id, 'Neboscope neo finish')
+    
 
 # Комманда '/neostop'
 @bot.message_handler(commands=['neostop'])
@@ -112,6 +174,7 @@ def neo_start(message):
     bot.send_message(message.chat.id, 'Neboscope neo finish')
     neo.stop_swow()
 
+
 # Комманда '/neostop'
 @bot.message_handler(commands=['neostart-rotat'])
 def neo_start(message):
@@ -120,20 +183,30 @@ def neo_start(message):
     bot.send_message(message.chat.id, 'Neboscope neo finish')
     neo.stop_swow()
 
-# Комманда '/schedule_apt'
-@bot.message_handler(commands=['schedule_apt'])
+
+# Комманда '/scheduleApt'
+@bot.message_handler(commands=['scheduleApt'])
 def neo_start(message):
     
     logger.debug(f'User: {message.from_user.username} Data: {message.text}')
     bot.send_message(message.chat.id, orbital_apt.getSchedule(48, returnTable=True) )
 
 
-# Комманда '/schedule_l'
-@bot.message_handler(commands=['schedule_l'])
+# Комманда '/scheduleL'
+@bot.message_handler(commands=['scheduleL'])
 def neo_start(message):
     
     logger.debug(f'User: {message.from_user.username} Data: {message.text}')
     bot.send_message(message.chat.id, orbital_l.getSchedule(48, returnTable=True))
+
+
+# Комманда '/updateTle'
+@bot.message_handler(commands=['updateTle'])
+def neo_start(message):
+    
+    logger.debug(f'User: {message.from_user.username} Data: {message.text}')
+    check = orbital_l.update_tle()
+    bot.send_message(message.chat.id, f'Tle update data: {check}' )
 
 
 
