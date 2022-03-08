@@ -1,0 +1,38 @@
+{
+ "satDumpPath": "/mnt/files/iq/test/satdump/build",
+ "dataPath": "/mnt/files/iq/test/data",
+ "FENGYUN 3B": {
+  "pipeline": "fengyun3_ab_ahrpt",
+  "samplerate": "6000000"
+ },
+ "FENGYUN 3C": {
+  "pipeline": "fengyun3_c_ahrpt",
+  "samplerate": "6000000"
+ },
+ "METOP-B": {
+  "pipeline": "metop_ahrpt",
+  "samplerate": "6000000"
+ },
+ "METOP-C": {
+  "pipeline": "metop_ahrpt",
+  "samplerate": "6000000"
+ },
+ "NOAA 18": {
+  "pipeline": "noaa_hrpt",
+  "samplerate": "6000000"
+ },
+ "NOAA 19": {
+  "pipeline": "noaa_hrpt",
+  "samplerate": "6000000"
+ },
+ "METEOR-M2": {
+  "pipeline": "meteor_hrpt",
+  "samplerate": "6000000"
+ },
+ "METEOR-M2 2": {
+  "pipeline": "meteor_hrpt",
+  "samplerate": "6000000"
+ },
+ "bf": "f32",
+ "keepBadIQ": false
+}
