@@ -71,7 +71,8 @@ except:
 
 # работа с библиотекой для рассчета пролетов 
 try:
-    path = 'C:/Users/Yarik9008/YandexDisk/nebosckop/telegram-bot-0.0.2'
+   # path = 'C:/Users/Yarik9008/YandexDisk/nebosckop/telegram-bot-0.0.2'
+    path = '/home/ubuntu/nebosckop/telegram-bot-0.0.2'
     lat, lon, height = 55.3970, 55.3970, 130
     orbital_apt = Lorett_Orbital('lex', lon, lat, height, path, timeZone=3)
     orbital_l = Lorett_Orbital('l2s', lon, lat, height, path, timeZone=3)
@@ -172,7 +173,7 @@ def neo_start(message):
 
     logger.debug(f'User: {message.from_user.username} Data: {message.text}')
     bot.send_message(message.chat.id, 'Neboscope neo finish')
-    neo.stop_swow()
+    neo.stop()
 
 
 # # Комманда '/neostop'

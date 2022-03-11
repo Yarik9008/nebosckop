@@ -1,7 +1,11 @@
-import sys
+azimut = '151:18'
+height = '014:59'
 
-# отобразим список аргументов командной строки
-print('Список аргументов:', str(sys.argv))
 
-# и количество аргументов
-print(sys.argv[1])
+
+
+azimut = float('.'.join(str(azimut).split(':')))
+height = float('.'.join(str(height).split(':')))
+
+print(azimut)
+print(height)
