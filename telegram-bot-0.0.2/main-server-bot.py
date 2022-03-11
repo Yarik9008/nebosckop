@@ -11,26 +11,25 @@ from NeboscopeLedStrip import *
 фото-получение фото в реальном времени
 неостарт-включение теста адресной ленты
 неостоп-выключить адресную ленту
-
-weather - get real time weather
-photo - get real time photo
-scheduleApt - request schedule apt 
-scheduleL - request schedule l
-updateTle - update tle data
-neostart1 - neo_1
-neostart2 - neo_2
-neostart3 - neo_3
-neostart4 - neo_4
-neostart5 - neo_5
-neostart6 - neo_6
-neostart7 - neo_7
-neostart8 - neo_8
-neostart9 - neo_9
-neostart10 - neo_10
-neostart11 - neo_11
-neostart12 - neo_12
-neostart13 - neo_13
-neostop - turn off the address tape
+weather - Get real time weather
+photo - Get real time photo
+scheduleapt - Request schedule apt 
+scheduleL - Request schedule l
+updatetle - Update tle data
+neostart1 - Neo_1
+neostart2 - Neo_2
+neostart3 - Neo_3
+neostart4 - Neo_4
+neostart5 - Neo_5
+neostart6 - Neo_6
+neostart7 - Neo_7
+neostart8 - Neo_8
+neostart9 - Neo_9
+neostart10 - Neo_10
+neostart11 - Neo_11
+neostart12 - Neo_12
+neostart13 - Neo_13
+neostop - Turn off the address tape
 '''
 
 ### init ###
@@ -186,7 +185,7 @@ def neo_start(message):
 
 
 # Комманда '/scheduleApt'
-@bot.message_handler(commands=['scheduleApt'])
+@bot.message_handler(commands=['scheduleapt'])
 def neo_start(message):
     
     logger.debug(f'User: {message.from_user.username} Data: {message.text}')
@@ -194,7 +193,7 @@ def neo_start(message):
 
 
 # Комманда '/scheduleL'
-@bot.message_handler(commands=['scheduleL'])
+@bot.message_handler(commands=['schedulel'])
 def neo_start(message):
     
     logger.debug(f'User: {message.from_user.username} Data: {message.text}')
@@ -202,7 +201,7 @@ def neo_start(message):
 
 
 # Комманда '/updateTle'
-@bot.message_handler(commands=['updateTle'])
+@bot.message_handler(commands=['updatetle'])
 def neo_start(message):
     
     logger.debug(f'User: {message.from_user.username} Data: {message.text}')
