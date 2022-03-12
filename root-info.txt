@@ -39,3 +39,5 @@ token: 5058985853:AAHbLTN9sai_eocdTjzSnnbhne7XaBWdRVQ
     - sudo pip3 install pyTelegramBotAPI
     - git clone https://github.com/Yarik9008/nebosckop
     
+55.393612, 43.832504
+55.398554, 43.853853

@@ -94,8 +94,11 @@ def send_welcome(message):
 def send_weather(message):
     
     massdata = {**lyx_metr.reqiest(), **term_h_p.reqiest()}
-    temp, pressure, humidity, lyx = massdata['temp'], massdata['pressure'], massdata['humidity'], massdata['lux']
-    bot.send_message(message.chat.id, f'Weather realtime:\nTerm = {temp}\nPressure = {pressure}\nHumidity = {humidity}\nLyx = {lyx}')
+
+    temp, pressure, humidity, lux = massdata['temp'], massdata['pressure'], massdata['humidity'], massdata['lux']
+
+    bot.send_message(message.chat.id, f'Weather realtime:\nTerm = {temp}\nPressure = {pressure}\nHumidity = {humidity}\nLyx = {lux}')
+    
     logger.debug(f'User: {message.from_user.username} Data: {message.text}')
 
 
